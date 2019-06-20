@@ -11,6 +11,7 @@ export default function CartItem(props) {
         <Text isHeader text={item.title} />
         <Text isHeader={false} text={item.description} />
         <Text isHeader={false} text={item.price} />
+        <Text text={item.quantity}/>
         <button onClick={() => deleteFromCart(item.id)}>Remove from Cart</button>
       </div>
     </div>
