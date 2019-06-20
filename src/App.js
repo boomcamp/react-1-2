@@ -1,174 +1,173 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import Product from './components/Product';
+import CartItem from './components/CartItem';
+import "./App.css";
+
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      cardView: true,
+      mainView: true,
+      cart: [],
+      address: "",
+      creditCard: "",
+      search: "",
+      hats: [
+        {
+          id: 1,
+          title: "Fisherman's Hat",
+          description:
+            "Headgear commonly used by fishermen. Increases fishing skill marginally.",
+          price: 12.99,
+          imageUrl: "https://via.placeholder.com/150x150",
+          quantity: 0
+        },
+        {
+          id: 2,
+          title: "Metal Hat",
+          description: "Uncomfortable, but sturdy.",
+          price: 8.99,
+          imageUrl: "https://via.placeholder.com/150x150",
+          quantity: 0
+        }
+      ],
+      beachGear: [
+        {
+          id: 3,
+          title: "Tent",
+          description: "Portable shelter.",
+          price: 32.99,
+          imageUrl: "https://via.placeholder.com/150x150",
+          quantity: 0
+        }
+      ]
+    };
 
-    constructor() {
-      super();
-      this.state = {
-        
-        shirt: [
-          {
-            id: 1,
-            imageUrl: 'https://via.placeholder.com/150x150',
-            title: 'Titan',
-            price: 12.99,
-            description: 'dipisicing elit. Quasi libero nemo dolorem soluta laborum, sequi natus quisquam consequuntur, iusto repellendus ab ',
-            quantity: 0 ,
+    this.addToCart = this.addToCart.bind(this);
+    this.deleteFromCart = this.deleteFromCart.bind(this);
+  }
 
-          },
-          {
-            id: 2,
-            imageUrl: 'https://via.placeholder.com/150x150',
-            title: 'asdfsdfasdfsadfsa',
-            price: 12.99,
-            description: 'has a feather in it.',
-            quantity: 0 ,
-            
-          },
-          {
-            id: 3,
-            imageUrl: 'https://via.placeholder.com/150x150',
-            title: 'asd',
-            price: 12.99,
-            description: 'has a feather in it.',
-            quantity: 0 ,
-            
-          },
-         
-          
-          
+  handleSearch(value) {
+    this.setState({search: value})
+  }
 
-        ],
-        hats: [
-          {
-            id: 1,
-            title: "Fisherman's Hat",
-            description:
-              'Headgear commonly used by fishermen. Increases fishing skill marginally.',
-            price: 12.99,
-            imageUrl: 'https://via.placeholder.com/150x150',
-            quantity: 0 ,
-            
-          },
-          {
-            id: 2,
-            title: 'Metal Hat',
-            description: 'Uncomfortable, but sturdy.',
-            price: 8.99,
-            imageUrl: 'https://via.placeholder.com/150x150',
-            quantity: 0 ,
-            
-          },
-        ],
+  addToCart(item) {
+    let cartCopy = this.state.cart.map(product => Object.assign({}, product));
+    let index = this.state.cart.findIndex(product => product.id === item.id);
 
-        cart: [],
-        address: '',
-        creditCard: '',
-        cardView: false,
-      };
-    }
-
-   
-    addToCart(item) {
-      let cartCopy = this.state.cart.map(product => Object.assign({}, product));
-      let index = this.state.cart.findIndex(product => product.id === item.id);
-  
-      if (index === -1) {
-        item = Object.assign({}, item, { quantity: 1 });
-        this.setState({ cart: [...this.state.cart, item] });
-      } else {
-        cartCopy[index].quantity++;
-        this.setState({ cart: cartCopy });
-      }
-    }
-
-    deleteFromCart(id) {
-      let cartCopy = this.state.cart.map(product => Object.assign({}, product));
-      let index = this.state.cart.findIndex(product => product.id === id);
-  
-      if (cartCopy[index].quantity === 1) {
-        cartCopy.splice(index, 1);
-      } else if (cartCopy[index].quantity > 1) {
-        cartCopy[index].quantity--;
-      }
-  
+    if (index === -1) {
+      item = Object.assign({}, item, { quantity: 1 });
+      this.setState({ cart: [...this.state.cart, item] });
+    } else {
+      cartCopy[index].quantity++;
       this.setState({ cart: cartCopy });
     }
-  
-    
+  }
 
-    checkout = () => {
-      if (this.state.address.length > 0 && this.state.creditCard.length > 0) {
-        this.setState({ cart: [] });
-        alert('Purchase is complete!');
-      } else {
-        alert('Please fill out the required fields.');
-      }
+  deleteFromCart(id) {
+    let cartCopy = this.state.cart.map(product => Object.assign({}, product));
+    let index = this.state.cart.findIndex(product => product.id === id);
+
+    if (cartCopy[index].quantity === 1) {
+      cartCopy.splice(index, 1);
+    } else if (cartCopy[index].quantity > 1) {
+      cartCopy[index].quantity--;
     }
 
-    handleAddressInput = (e) => {
-      this.setState({address: e.target.value})
-    
-    }
-  
-    handleCreditCardInput = (e) => {
-      this.setState({ creditCard: e.target.value });
-    }
-   
-    handleToggle = () =>{
-      this.setState({ cardView: !this.state.cardView });
-      console.log(this.state.cardView);
-    }
-    render(){
-      
-      
+    this.setState({ cart: cartCopy });
+  }
 
-      return (
-        <div className="App">
-          
-          <section className="products" >
-            <h4 className="section-title no-margin">Products</h4>
-            <br/>
-            <button onClick={this.handleToggle}>Toggle View</button>
-      
-            <h4 className="section-title">T-shirts</h4>
-            {
-              this.state.shirt.map( element => (
-                <div key={element.id} className={this.state.cardView ? "product" : " product flexed"}>
-                  <img src={element.imageUrl} />
-                  <div className="product-description">
-                    <h4>{element.title}</h4>
-                    <br/>  
-                    <p>{element.description}</p>
-                    <p>$ {element.price}</p>
+  checkout = () => {
+    if (this.state.address.length > 0 && this.state.creditCard.length > 0) {
+      this.setState({ cart: [] });
+      alert("Purchase is complete!");
+    } else {
+      alert("Please fill out the required fields.");
+    }
+  };
 
-                    <button onClick={() => this.addToCart(element)}>Add to Cart</button>
-                  </div>
-                </div>
-              ))
-            }
-            <h4 className="section-title">Hats</h4>
-            {
-              this.state.hats.map( element => (
-                <div key={element.id}  className={this.state.cardView ? "product" : " product flexed"}>
-                  <img src={element.imageUrl} />
-                  <div className="product-description">
-                    <h4>{element.title}</h4>
-                    <br/>  
-                    <p>{element.description}</p>
-                    <p>$ {element.price}</p>
+  handleAddressInput = e => {
+    this.setState({ address: e.target.value });
+  };
 
-                    <button onClick={() => this.addToCart(element)}>Add to Cart</button>
-                  </div>
-                </div>
-              ))
-            }
-         
-          </section>
-          <section className="cart">
-            <h4 className="section-title no-margin white-color">Cart</h4>
-            <br/>
-            <div className="inputs">
+  handleCreditCardInput = e => {
+    this.setState({ creditCard: e.target.value });
+  };
+
+  handleToggleView = () => {
+    this.setState({ cardView: !this.state.cardView });
+  };
+
+  handleTogglePage = () => {
+    this.setState({ mainView: !this.state.mainView });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <nav className={this.state.mainView ? "black" : "grey"}>
+          <button onClick={() => this.handleTogglePage()}>Change Page</button>
+        </nav>
+        { this.state.mainView ? (
+        <section className="products">
+          <h1>Products</h1>
+          <label>
+            Search:
+            <input value={this.state.search} onChange={(e) => this.handleSearch(e.target.value)} />
+          </label>
+          <br/>
+          <button onClick={this.handleToggleView}>Toggle View</button>
+          <h2>Hats</h2>
+          {this.state.hats.map(item => {
+              if(this.state.search) {
+                if(item.title.toLowerCase().includes(this.state.search.toLowerCase())) {
+                  return (
+                    <Product key={item.id} item={item} addToCart = {this.addToCart} view = {this.state.cardView}/>
+                  )
+                } else {
+                  return
+                }
+              }
+              return (
+                <Product key={item.id} item={item} addToCart = {this.addToCart} view = {this.state.cardView}/>
+              )
+            })
+          }
+
+          <h2>Beach Gear</h2>
+          {this.state.beachGear.map(item => {
+              if(this.state.search) {
+                if(item.title.toLowerCase().includes(this.state.search.toLowerCase())) {
+                  return (
+                    <Product key={item.id} item={item} addToCart = {this.addToCart} view = {this.state.cardView}/>
+                  )
+                } else {
+                  return
+                }
+              }
+              return (
+                <Product key={item.id} item={item} addToCart = {this.addToCart} view = {this.state.cardView}/>
+              )
+            })
+          }
+        </section> )
+        :
+        (
+        <section className="cart">
+          <h1>Cart</h1>
+          <h2>
+            Total: $
+            {this.state.cart
+              .reduce(
+                (totalPrice, product) =>
+                  (totalPrice += product.price * product.quantity),
+                0
+              )
+              .toFixed(2)}
+          </h2>
+
+          <div className="inputs">
             <input
               placeholder="address"
               value={this.state.address}
@@ -176,45 +175,19 @@ export default class App extends Component {
             />
             <input
               placeholder="credit card number"
+              value={this.state.creditCard}
               onChange={this.handleCreditCardInput}
             />
           </div>
-            <h4 className="section-title white-color">
-              Total : $
-             
-              {this.state.cart.reduce( (totalPrice , item) => ( 
-                totalPrice += item.price
-                ) , 0)}
-            </h4>
-           
-            <button className="section-title" onClick={this.checkout}>Checkout</button>
-            <br/><br/>
-            <div className="cart-item-container">
-            {
-              this.state.cart.map( element => (
-                <div key={element.id} className="cart-item">
-                  <img src={element.imageUrl} />
-                  <div className="cart-description">
-                    <h4>{element.title} </h4>
-                    <br/>
-                    <p>{element.description}</p>
-                    <br/>
-                    <p>$ {element.price} | <b>Quantity</b> : {element.quantity}</p>
-                    <button onClick={() => this.deleteFromCart(element.id)}>
-                      Remove from Cart
-                    </button>
-                    {/* <button onClick={() => this.addToCart(element)}>Add to Cart</button> */}
-                  </div>
-                </div>
 
-              ))
-            }
-            </div>
+          <button onClick={this.checkout}>Checkout</button>
 
-          </section>
-        </div>
-      );
-     
-    }
-
+          {this.state.cart.map(item => (
+            <CartItem key={item.id} item={item} deleteFromCart={this.deleteFromCart}/>
+          ))}
+        </section>
+        ) }
+      </div>
+    );
+  }
 }
