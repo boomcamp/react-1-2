@@ -71,3 +71,18 @@
 .product-list {
   margin-bottom: 24px;
 }
+
+.black{
+  background-color: var(--black);
+}
+
+.grey{
+  background-color: var(--grey);
+}
+
+nav{
+  display: flex;
+  justify-content: center;
+  height: 35px;
+  align-items: center;
+}
