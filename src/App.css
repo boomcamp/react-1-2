@@ -8,11 +8,13 @@
   width: 100%;
   display: flex;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .products,
 .cart {
-  width: 50%;
+  width: 100%;
   padding: 16px 24px;
   display: inline-block;
   flex: 1;
@@ -70,4 +72,21 @@
 
 .product-list {
   margin-bottom: 24px;
+}
+
+nav {
+  height: 40px;
+  padding: 10px;
+}
+
+.grey {
+  background-color: grey;
+}
+
+.black {
+  background-color: black;
+}
+
+.changepage {
+  height: 20px;
 }
