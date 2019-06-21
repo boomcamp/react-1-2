@@ -7,9 +7,22 @@
 .App {
   width: 100%;
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
+.App .black {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: var(--black);
+}
+.App .gray {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: var(--grey);
+}
 .products,
 .cart {
   width: 50%;
@@ -19,6 +32,8 @@
 }
 
 .products {
+
+  width: 100%;
   background-color: var(--grey);
   color: var(--black);
 }
@@ -54,6 +69,8 @@
 .cart {
   background-color: var(--black);
   color: var(--white);
+
+  width: 100%;
 }
 
 .cart button {
