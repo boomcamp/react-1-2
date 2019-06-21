@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 export default function Product(props){
-    const {item, addToCart} = props
+    const {item, addToCart, view} = props
 
     return (
-        <div className="product">
+        <div className={view ? 'product' : 'product-list'}>
             <img src={item.imageUrl} />
                 <div className="product-info">
                 <h4>{item.title}</h4>
