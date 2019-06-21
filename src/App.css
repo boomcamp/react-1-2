@@ -8,11 +8,32 @@
   width: 100%;
   display: flex;
   min-height: 100vh;
+  flex-direction: column;
+}
+
+nav {
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+
+section{
+  padding: 25px;
+}
+
+.grey {
+  background-color: var(--grey);
+}
+
+.black {
+  background-color: var(--black);
 }
 
 .products,
 .cart {
-  width: 50%;
+  width: 100%;
   padding: 16px 24px;
   display: inline-block;
   flex: 1;
@@ -41,6 +62,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  flex-wrap: wrap;
 }
 
 .product-info {
@@ -70,4 +92,8 @@
 
 .product-list {
   margin-bottom: 24px;
+}
+
+br+button {
+  margin-top: 8px;
 }
