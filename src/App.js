@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-
+import Product from './components/Product';
+import CartItem from './components/CartItem'
 export default class App extends Component {
   constructor() {
     super();
@@ -35,7 +36,7 @@ export default class App extends Component {
     };
   }
 
-  addToCart(item) {
+  addToCart=item => {
     this.setState({
       cart: [...this.state.cart, item],
     });
@@ -53,32 +54,12 @@ export default class App extends Component {
           <h1>Products</h1>
           <h2>Hats</h2>
           {this.state.hats.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-                <button onClick={() => this.addToCart(item)}>
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+            <Product key={item.id} item={item} addToCart={this.addToCart}/>
           ))}
 
           <h2>Beach Gear</h2>
           {this.state.beachGear.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-                <button onClick={() => this.addToCart(item)}>
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+             <Product key={item.id} item={item} addToCart={this.addToCart}/>
           ))}
         </section>
 
@@ -93,14 +74,7 @@ export default class App extends Component {
           </h2>
           <button onClick={this.checkout}>Checkout</button>
           {this.state.cart.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-              </div>
-            </div>
+            <CartItem key={item.id} item={item}/>
           ))}
         </section>
       </div>
