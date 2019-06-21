@@ -44,7 +44,7 @@ export default class App extends Component {
 
   checkout = () => {
     this.setState({ cart: [] });
-    alert('Purchase is complete!');
+    alert('Purchase complete!');
   };
 
   render() {
