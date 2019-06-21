@@ -4,12 +4,16 @@
   --white: #fff;
 }
 
+
 .App {
   width: 100%;
   display: flex;
   min-height: 100vh;
 }
 
+.changer {
+  margin: auto;
+}
 .products,
 .cart {
   width: 50%;
@@ -64,6 +68,9 @@
   margin-bottom: 16px;
 }
 
+.search_bar {
+  padding:10px;
+}
 .inputs input:not(:last-child) {
   margin-right: 10px;
 }
