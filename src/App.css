@@ -5,6 +5,8 @@
 }
 
 .App {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   display: flex;
   min-height: 100vh;
@@ -12,7 +14,7 @@
 
 .products,
 .cart {
-  width: 50%;
+  width: 100%;
   padding: 16px 24px;
   display: inline-block;
   flex: 1;
@@ -70,4 +72,18 @@
 
 .product-list {
   margin-bottom: 24px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.black {
+  background: var(--black);
+}
+
+.grey {
+  background: var(--grey);
 }
