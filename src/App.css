@@ -71,3 +71,18 @@
 .product-list {
   margin-bottom: 24px;
 }
+
+.toggleView{
+  background-color: pink;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.toggleView button{
+  padding: 10px;
+  width: 20%;
+  font-size: 20px;
+}
