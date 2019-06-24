@@ -31,3 +31,4 @@ Product.propTypes = {
   addToCart: PropTypes.func.isRequired,
   handleToggleView: PropTypes.bool.isRequired,
 }
+

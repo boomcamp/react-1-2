@@ -28,5 +28,7 @@ CartItem.propTypes = {
     imageUrl: PropTypes.string.isRequired,
 	}),
 	deleteFromCartFn: PropTypes.func.isRequired,
-}
+} 
+
+
 
