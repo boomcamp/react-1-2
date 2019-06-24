@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Product(props){
     const { item, addToCart } = props;
@@ -15,3 +16,14 @@ export default function Product(props){
         </div>
     )
 }
+
+Product.propTypes = {
+    item: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      imageUrl: PropTypes.string.isRequired,
+    }),
+    addToCart: PropTypes.func.isRequired,
+  };
