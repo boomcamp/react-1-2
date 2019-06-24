@@ -8,11 +8,31 @@
   width: 100%;
   display: flex;
   min-height: 100vh;
+  flex-direction: column;
+}
+
+.App nav {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App.active nav {
+  background-color: var(--black);
+}
+
+.products input {
+  margin-bottom: 10px;
+}
+
+.App.disabled nav {
+  background-color: var(--grey);
 }
 
 .products,
 .cart {
-  width: 50%;
+  width: 100%;
   padding: 16px 24px;
   display: inline-block;
   flex: 1;
@@ -41,6 +61,14 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+}
+
+.product.active {
+  flex-direction: row;
+}
+
+.product.disabled {
+  flex-direction: column;
 }
 
 .product-info {
