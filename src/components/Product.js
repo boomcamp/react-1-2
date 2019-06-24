@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import Text from './Text';
 
 export default function Product (props) {
-  const { item, addToCart } = props;
-
+  const { item, addToCart, cardView } = props;
   return (
-    <div className="product">
-      <img src={item.imageUrl} />
+    <div className={cardView ? "product" : "product-list"}>
+      <img src={item.imageUrl} alt='productImage'/>
       <div className="product-info">
         <Text isHeader={true} text={item.title} />
         <Text isHeader={false} text={item.description} />
@@ -27,4 +26,5 @@ Product.propTypes = {
     imageUrl: PropTypes.string.isRequired,
   }),
   addToCart: PropTypes.func.isRequired,
+  cardView: PropTypes.bool.isRequired,
 };
