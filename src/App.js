@@ -81,6 +81,12 @@ export default class App extends Component {
               0
             )}
           </h2>
+
+          <div className="inputs">
+            <input placeholder="address" />
+            <input placeholder="credit card number" />
+          </div>
+
           <button onClick={this.checkout}>Checkout</button>
           {this.state.cart.map(item => (
             <CartItem key={item.id} 

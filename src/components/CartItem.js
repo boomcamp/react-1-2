@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Text from './Text';
 
 export default function CartItem(props) {
   const { item } = props;
@@ -8,9 +9,10 @@ export default function CartItem(props) {
     <div className="product">
       <img src={item.imageUrl} />
       <div className="product-info">
-        <h4>{item.title}</h4>
-        <p>{item.description}</p>
-        <p>{item.price}</p>
+        <Text isHeader={true} text={item.title} />
+        <Text isHeader={false} text={item.description} />
+        <Text isHeader={false} text={item.price} />
+        <button> Remove from Cart </button>
       </div>
     </div>
   )
