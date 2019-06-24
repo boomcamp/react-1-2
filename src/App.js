@@ -66,9 +66,38 @@ export default class App extends Component {
   };
 
   checkout = () => {
-    this.setState({ cart: [] });
-    alert('Purchase complete!');
-  };
+       if (this.state.address.length > 0 && this.state.creditCard.length > 0) {
+           this.setState({cart: []});
+           alert('Purchase is Complete.')
+       } else {
+           alert('Please fill out the required fields')
+       }
+   };
+
+   deleteFromCart = (id) => {
+       let cartItem = this.state.cart.map(product => Object.assign({}, product));
+       let index = this.state.cart.findIndex(product => product.id == id);
+
+       if (cartItem[index].quantity == 1) {
+           cartItem.splice(index, 1);
+       } else if (cartItem[index].quantity > 1) {
+           cartItem[index].quantity--;
+       }
+       this.setState({cart: cartItem});
+   }
+
+   
+   handleToggleView = () => {
+       this.setState({ cardView: !this.state.cardView });
+   };
+
+   handleAddressInput = e => {
+       this.setState({ address: e.target.value });
+   };
+
+   handleCreditCardInput = e => {
+       this.setState({ creditCard: e.target.value });
+   };
 
   render() {
     return (
@@ -108,12 +137,13 @@ export default class App extends Component {
 
               <input type="text" placeholder="Credit Card Number" value={this.setState.creditCard} onChange={this.handleCreditCardInput} />
           </div>
-          <button onClick={this.checkout}>Checkout</button>
+          <button className="btn-checkout" onClick={this.checkout}>Checkout</button>
           
           {this.state.cart.map(item => (
             <CartItem 
                 key={item.id}
                 item={item}
+                deleteFromCart={this.deleteFromCart}
             />
           ))} 
         </section>
