@@ -6,7 +6,7 @@ function Product(props){
     const { item, addToCart} = props;
 
     return (
-        <div key={item.id} className="product">
+        <div key={item.id} className={handleToggleView ? 'product' : ''}>
           <img src={item.imageUrl} />
           <div className="product-info">
             <Text isHeader={true} text={item.title} />
@@ -27,6 +27,7 @@ Product.propTypes = {
     imageUrl: PropTypes.string.isRequired,
   }),
   addToCart: PropTypes.func.isRequired,
+  handleToggleView: PropTypes.bool.isRequired,
 };
 
 export default Product;

@@ -55,6 +55,14 @@ export default class App extends Component {
     })
   }
 
+  handleToggleView = () => { 
+    if(this.state.cardView){
+      this.setState({cardView: false})
+    } else {
+      this.setState({cardView: true})
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -62,12 +70,12 @@ export default class App extends Component {
           <h1>Products</h1>
           <h2>Hats</h2>
           {this.state.hats.map(item => (
-            <Product key={item.id} item={item} addToCart={this.addToCart} />
+            <Product key={item.id} item={item} addToCart={this.addToCart} handleToggleView={this.state.cardView} />
           ))}
 
           <h2>Beach Gear</h2>
           {this.state.beachGear.map(item => (
-            <Product key={item.id} item={item} addToCart={this.addToCart} />
+            <Product key={item.id} item={item} addToCart={this.addToCart} handleToggleView={this.state.cardView} />
           ))}
         </section>
 

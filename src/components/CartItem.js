@@ -12,6 +12,7 @@ export default function CartItem(props) {
         <Text isHeader={true} text={item.title} />
         <Text isHeader={false} text={item.description} />
         <Text isHeader={false} text={item.price} />
+        <button onClick={() => props.deleteFromCartFn(props.item.id)}>remove</button>
         </div>
       </div>
     );
@@ -24,4 +25,5 @@ CartItem.propTypes = {
       price: PropTypes.number.isRequired,
       imageUrl: PropTypes.string.isRequired,
     }),
+	deleteFromCartFn: PropTypes.func.isRequired,
   };
