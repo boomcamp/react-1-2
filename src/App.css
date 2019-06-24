@@ -8,11 +8,12 @@
   width: 100%;
   display: flex;
   min-height: 100vh;
+  flex-direction: column;
 }
 
 .products,
 .cart {
-  width: 50%;
+  width: 100%;
   padding: 16px 24px;
   display: inline-block;
   flex: 1;
@@ -70,4 +71,20 @@
 
 .product-list {
   margin-bottom: 24px;
+}
+
+.navbar {
+  height: 50px;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.black {
+  background-color: black;
+}
+
+.grey {
+  background-color: #ececec;
 }
