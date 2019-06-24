@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Product from './components/Product';
+import CartItem from './components/CartItem';
 import './App.css';
 
 export default class App extends Component {
@@ -74,14 +75,7 @@ export default class App extends Component {
           </h2>
           <button onClick={this.checkout}>Checkout</button>
           {this.state.cart.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-              </div>
-            </div>
+            <CartItem key={item.id} item={item} />
           ))}
         </section>
       </div>
