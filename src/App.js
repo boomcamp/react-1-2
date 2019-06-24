@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import Product from './components/Product'
+import CartItem from "./components/CartItem";
 export default class App extends Component {
   constructor() {
     super();
     this.state = {
+      cardView: true,
       cart: [],
       hats: [
         {
@@ -35,50 +38,46 @@ export default class App extends Component {
     };
   }
 
-  addToCart(item) {
+  addToCart = item => {
     this.setState({
       cart: [...this.state.cart, item],
     });
-  }
+  };
 
   checkout = () => {
     this.setState({ cart: [] });
     alert('Purchase is complete!');
   };
 
+  deleteFromCart = (id) => {
+    let cartCopy = this.state.cart.filter(item => id !== item.id)
+    this.setState({
+      cart: cartCopy
+    })
+  }
+
+  handleToggleView = () => { 
+    if(this.state.cardView){
+      this.setState({cardView: false})
+    } else {
+      this.setState({cardView: true})
+    }
+  }
+
   render() {
     return (
       <div className="App">
         <section className="products">
           <h1>Products</h1>
+          <button onClick={() => this.handleToggleView()}>Toggle View</button>
           <h2>Hats</h2>
           {this.state.hats.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-                <button onClick={() => this.addToCart(item)}>
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+            <Product key={item.id} item={item} addToCart={this.addToCart} handleToggleView={this.state.cardView} />
           ))}
 
           <h2>Beach Gear</h2>
           {this.state.beachGear.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-                <button onClick={() => this.addToCart(item)}>
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+            <Product key={item.id} item={item} addToCart={this.addToCart} handleToggleView={this.state.cardView} />
           ))}
         </section>
 
@@ -93,14 +92,7 @@ export default class App extends Component {
           </h2>
           <button onClick={this.checkout}>Checkout</button>
           {this.state.cart.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-              </div>
-            </div>
+            <CartItem key={item.id} item={item} deleteFromCartFn={this.deleteFromCart} />
           ))}
         </section>
       </div>
