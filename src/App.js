@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
+import Product from './components/Product'
+import CartItem from './components/CartItem'
 
-export default class App extends Component {
+class App extends Component {
   constructor() {
     super();
     this.state = {
+      cardView: true,
+      changePage: true,
       cart: [],
       hats: [
         {
@@ -14,6 +18,7 @@ export default class App extends Component {
             'Headgear commonly used by fishermen. Increases fishing skill marginally.',
           price: 12.99,
           imageUrl: 'https://via.placeholder.com/150x150',
+          quantity: 0,
         },
         {
           id: 2,
@@ -21,6 +26,7 @@ export default class App extends Component {
           description: 'Uncomfortable, but sturdy.',
           price: 8.99,
           imageUrl: 'https://via.placeholder.com/150x150',
+          quantity: 0,
         },
       ],
       beachGear: [
@@ -30,80 +36,131 @@ export default class App extends Component {
           description: 'Portable shelter.',
           price: 32.99,
           imageUrl: 'https://via.placeholder.com/150x150',
+          quantity: 0,
         },
       ],
+      searchstr: '',
+      regex: '',
+      address: '',
+			creditCard: '',
     };
   }
 
-  addToCart(item) {
-    this.setState({
-      cart: [...this.state.cart, item],
-    });
-  }
+  addToCart = (item) => {
+		let cartCopy = this.state.cart.map(product => Object.assign({}, product));
+		console.log(cartCopy)
+		let i = this.state.cart.findIndex(ite => ite.id === item.id)
+		console.log(i);
+		if(i === -1){
+			item.quantity = 1;
+			this.setState({
+				cart: this.state.cart.concat(item)
+			})
+		}
+		else{
+			cartCopy[i].quantity++;
+      		this.setState({ cart: cartCopy });
+		}
+	}
 
   checkout = () => {
-    this.setState({ cart: [] });
-    alert('Purchase is complete!');
+    if (this.state.address.length > 0 && this.state.creditCard.length > 0) {
+		  this.setState({ cart: [] });
+		  alert('Purchase is complete!');
+		} else {
+		  alert('Please fill out the required fields.');
+		}
   };
+
+  handleAddressInput = (e) => {
+		this.setState({address: e.target.value})
+	}
+
+	handleCreditCardInput = (e) => {
+		this.setState({creditCard: e.target.value})
+  }
+
+  deleteFromCart = (id) => {
+    let cartCopy = this.state.cart.filter(item => id !== item.id)
+    this.setState({
+      cart: cartCopy
+    })
+  }
+
+  handleToggleView = () => { 
+    if(this.state.cardView){
+      this.setState({cardView: false})
+    } else {
+      this.setState({cardView: true})
+    }
+  }
+
+  searchBar = (e) => {
+    this.setState({searchstr: e.target.value, regex: new RegExp(e.target.value, 'gi')})
+    console.log(this.state.regex);
+  }
+  
+  handleChangePage = () =>{
+    this.state.changePage ? this.setState({changePage : false}) : this.setState({changePage : true})
+  }
 
   render() {
     return (
       <div className="App">
+        <nav className={this.state.changePage ? 'black' : 'grey'}>
+          <button onClick={this.handleChangePage}>Switch</button>  
+        </nav>
+        {this.state.changePage ? 
         <section className="products">
           <h1>Products</h1>
+          <div><span>Search:</span>
+            <input onChange={e => this.searchBar(e)} />
+          </div>
+
+          <button onClick={() => this.handleToggleView()} className="toggle">Toggle View</button>
+          
           <h2>Hats</h2>
           {this.state.hats.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-                <button onClick={() => this.addToCart(item)}>
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+            item.title.match(this.state.regex) && <Product key={item.id} item={item} addToCart={this.addToCart} handleToggleView={this.state.cardView}/>
           ))}
 
           <h2>Beach Gear</h2>
           {this.state.beachGear.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-                <button onClick={() => this.addToCart(item)}>
-                  Add to Cart
-                </button>
-              </div>
-            </div>
+            item.title.match(this.state.regex) && <Product key={item.id} item={item} addToCart={this.addToCart} handleToggleView={this.state.cardView}/>
           ))}
         </section>
 
+        :
         <section className="cart">
           <h1>Cart</h1>
           <h2>
             Total: $
             {this.state.cart.reduce(
-              (totalPrice, product) => (totalPrice += product.price),
+              (totalPrice, product) => (totalPrice += product.price * product.quantity),
               0
-            )}
+            ).toFixed(2)}
           </h2>
-          <button onClick={this.checkout}>Checkout</button>
+          <div className='input'>
+						<input
+							placeholder='address'
+							value={this.state.address}
+							onChange={this.handleAddressInput}
+						/>
+						<input
+							placeholder='credit card number'
+							value={this.state.creditCard}
+							onChange={this.handleCreditCardInput}
+						/>
+					</div>
+          <button onClick={this.checkout} className="checkout">Checkout</button>
           {this.state.cart.map(item => (
-            <div key={item.id} className="product">
-              <img src={item.imageUrl} />
-              <div className="product-info">
-                <h4>{item.title}</h4>
-                <p>{item.description}</p>
-                <p>{item.price}</p>
-              </div>
-            </div>
+            <CartItem key={item.id} item={item} deleteFromCart={this.deleteFromCart}/>
           ))}
         </section>
+        }
       </div>
     );
   }
 }
+
+export default App;
