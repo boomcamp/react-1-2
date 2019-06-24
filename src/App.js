@@ -48,6 +48,13 @@ export default class App extends Component {
     alert('Purchase is complete!');
   };
 
+  deleteFromCart = (id) => {
+    let cartCopy = this.state.cart.filter(item => id !== item.id)
+    this.setState({
+      cart: cartCopy
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -75,7 +82,7 @@ export default class App extends Component {
           </h2>
           <button onClick={this.checkout}>Checkout</button>
           {this.state.cart.map(item => (
-            <CartItem key={item.id} item={item} />
+            <CartItem key={item.id} item={item} deleteFromCartFn={this.deleteFromCart} />
           ))}
         </section>
       </div>
