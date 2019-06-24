@@ -13,6 +13,8 @@ export default class App extends Component {
       address: "",
       creditCard: "",
       cardView : true,
+      defaultPage : true,
+      search : "",
       hats: [
         {
           id: 1,
@@ -100,33 +102,75 @@ export default class App extends Component {
       cardView : !this.state.cardView,
     })
   }
+
+  search = (input) => {
+    this.setState({
+      search: input,
+    })
+  }
+
+  handleTogglePage = () => {
+    this.setState({
+      defaultPage : !this.state.defaultPage,
+    })
+  }
+
   render() {
 
     return (
       <div className="App">
-        <section className="products">
+        <nav className={this.state.defaultPage ? ("navbar black") : ("navbar grey")}>
+          <button onClick={this.handleTogglePage}>Change Page</button>
+        </nav>
+
+        { this.state.defaultPage ? 
+        (<section className="products">
           <h1>Products</h1>
+          <label>Search : <input placeholder="Search" onChange={e => this.search(e.target.value)}/></label>
+          <br></br><br></br>
           <button onClick={this.handleToggleView}>Toggle View</button>
           <h2>Hats</h2>
-          {this.state.hats.map(item => (
-            <Product key={item.id}
-              item = {item}
-              addToCart = {this.addToCart}
-              cardView = {this.state.cardView}
-            />
-          ))}
+          {this.state.hats.map(item => {
+            if (this.state.search) {
+              if(item.title.toLowerCase().includes(this.state.search.toLowerCase())) {
+                return (<Product key={item.id}
+                  item = {item}
+                  addToCart = {this.addToCart}
+                  cardView = {this.state.cardView}
+                />)
+              }
+            } else {
+              return (<Product key={item.id}
+                item = {item}
+                addToCart = {this.addToCart}
+                cardView = {this.state.cardView}
+              />)
+            }
+          })}
 
           <h2>Beach Gear</h2>
-          {this.state.beachGear.map(item => (
-            <Product key={item.id}
-              item = {item}
-              addToCart = {this.addToCart}
-              cardView = {this.state.cardView}
-            />
-          ))}
-        </section>
+          {this.state.beachGear.map(item => {
+            if (this.state.search) {
+              if(item.title.toLowerCase().includes(this.state.search.toLowerCase())) {
+                return (<Product key={item.id}
+                  item = {item}
+                  addToCart = {this.addToCart}
+                  cardView = {this.state.cardView}
+                />)
+              }
+            } else {
+              return (<Product key={item.id}
+                item = {item}
+                addToCart = {this.addToCart}
+                cardView = {this.state.cardView}
+              />)
+            }
+          })}
+        </section>)
 
-        <section className="cart">
+        :
+
+        (<section className="cart">
           <h1>Cart</h1>
           <h2>
             Total: $
@@ -148,7 +192,8 @@ export default class App extends Component {
               deleteFromCartFn = {this.deleteFromCart}
             />
           ))}
-        </section>
+          </section>)
+        }
       </div>
     );
   }
