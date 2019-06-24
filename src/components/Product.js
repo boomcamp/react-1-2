@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Text from './Text';
 
 function Product(props){
-    const { item, addToCart} = props;
+    const { item, addToCart,handleToggleView} = props;
 
     return (
         <div key={item.id} className={handleToggleView ? 'product' : ''}>

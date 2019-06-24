@@ -7,6 +7,7 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
+      cardView: true,
       cart: [],
       hats: [
         {
@@ -68,6 +69,7 @@ export default class App extends Component {
       <div className="App">
         <section className="products">
           <h1>Products</h1>
+          <button onClick={() => this.handleToggleView()}>Toggle View</button>
           <h2>Hats</h2>
           {this.state.hats.map(item => (
             <Product key={item.id} item={item} addToCart={this.addToCart} handleToggleView={this.state.cardView} />
